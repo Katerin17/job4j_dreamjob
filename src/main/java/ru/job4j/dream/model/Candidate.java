@@ -2,13 +2,11 @@ package ru.job4j.dream.model;
 
 import java.util.Objects;
 
-public class Post {
+public class Candidate {
     private int id;
     private String name;
-    private String description;
-    private boolean created;
 
-    public Post(int id, String name) {
+    public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -29,32 +27,17 @@ public class Post {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isCreated() {
-        return created;
-    }
-
-    public void setCreated(boolean created) {
-        this.created = created;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return id == post.id;
+        Candidate candidate = (Candidate) o;
+        return id == candidate.id &&
+                Objects.equals(name, candidate.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name);
     }
 }
