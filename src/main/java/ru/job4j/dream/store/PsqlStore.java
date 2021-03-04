@@ -7,6 +7,7 @@ import ru.job4j.dream.model.Post;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -91,11 +92,22 @@ public class PsqlStore implements Store {
         }
     }
 
+    @Override
+    public void save(Candidate candidate) {
+        if (candidate.getId() == 0) {
+            create(candidate);
+        } else {
+            update(candidate);
+        }
+    }
+
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO posts(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO posts(name,description,created) VALUES (?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setString(2, post.getDescription());
+            ps.setDate(3, new Date(post.getCreated().getTime()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -106,6 +118,23 @@ public class PsqlStore implements Store {
             e.printStackTrace();
         }
         return post;
+    }
+
+    private Candidate create(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidates(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, candidate.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    candidate.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return candidate;
     }
 
     private void update(Post post) {
@@ -121,8 +150,20 @@ public class PsqlStore implements Store {
         }
     }
 
+    private void update(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET name = ? WHERE id = ?")
+        ) {
+            ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public Post findById(int id) {
+    public Post findPostById(int id) {
         Post foundPost = null;
         try (Connection cn = pool.getConnection();
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE id = ?")
@@ -138,5 +179,23 @@ public class PsqlStore implements Store {
             e.printStackTrace();
         }
         return foundPost;
+    }
+
+    @Override
+    public Candidate findCanById(int id) {
+        Candidate foundCandidate = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet foundDbEntry = ps.executeQuery()) {
+                if (foundDbEntry.next()) {
+                    foundCandidate = new Candidate(id, foundDbEntry.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foundCandidate;
     }
 }
