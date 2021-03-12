@@ -175,7 +175,7 @@ public class PsqlStore implements Store {
                     foundPost.setDescription(foundDbEntry.getString("description"));
                     }
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
         }
         return foundPost;
@@ -197,5 +197,17 @@ public class PsqlStore implements Store {
             e.printStackTrace();
         }
         return foundCandidate;
+    }
+
+    @Override
+    public void deleteCan(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+        PreparedStatement ps = cn.prepareStatement("DELETE FROM candidates WHERE id = ?")
+        ) {
+            ps.setInt(1, candidate.getId());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
