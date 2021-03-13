@@ -4,6 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>ru.job4j.dream.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
   <servlet>
     <servlet-name>PostServlet</servlet-name>
     <servlet-class>ru.job4j.dream.servlet.PostServlet</servlet-class>
@@ -47,15 +55,15 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>DownloadServlet</servlet-name>
-    <url-pattern>/download</url-pattern>
+    <url-pattern>/download.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UploadServlet</servlet-name>
-    <url-pattern>/upload</url-pattern>
+    <url-pattern>/upload.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RemoveServlet</servlet-name>
-    <url-pattern>/remove</url-pattern>
+    <url-pattern>/remove.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
