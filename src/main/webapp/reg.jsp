@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <!doctype html>
@@ -21,6 +22,11 @@
     <title>Работа мечты</title>
 </head>
 <body>
+<c:if test="${not empty error}">
+    <div style="color:#ff0000; font-weight: bold; margin: 30px 0;">
+        <c:out value="${error}"/><p>
+    </div>
+</c:if>
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
