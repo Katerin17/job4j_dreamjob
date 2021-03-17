@@ -19,10 +19,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class UploadServlet extends HttpServlet {
+
+    private static final String pathName = "/Users/ekaterinamironenko/Desktop/images";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : Objects.requireNonNull(new File("/Users/ekaterinamironenko/Desktop/images").listFiles())) {
+        for (File name : Objects.requireNonNull(new File(pathName).listFiles())) {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
@@ -39,7 +41,7 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("/Users/ekaterinamironenko/Desktop/images");
+            File folder = new File(pathName);
             if (!folder.exists()) {
                 folder.mkdir();
             }

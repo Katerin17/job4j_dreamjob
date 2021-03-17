@@ -10,16 +10,20 @@ import java.util.Objects;
 
 public class DownloadServlet extends HttpServlet {
 
-    String pathName = "/Users/ekaterinamironenko/Desktop/images";
+    private static final String pathName = "/Users/ekaterinamironenko/Desktop/images";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        File folder = new File(pathName);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
         String nameId = req.getParameter("nameId");
         if (nameId.contains(".")) {
             nameId = getNameWithoutExtension(nameId);
         }
         File downloadFile = null;
-        for (File file : Objects.requireNonNull(new File(pathName).listFiles())) {
+        for (File file : folder.listFiles()) {
             String shortFileName = file.getName();
             if (nameId.equals(getNameWithoutExtension(shortFileName))) {
                 downloadFile = file;
