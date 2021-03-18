@@ -1,16 +1,14 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.postgresql.util.PSQLException;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -103,11 +101,19 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void save(User user) {
-        if (user.getId() == 0) {
-            create(user);
-        } else {
-            update(user);
+    public void save(User user) throws SQLException {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if(id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
         }
     }
 
@@ -145,24 +151,6 @@ public class PsqlStore implements Store {
         }
     }
 
-    private void create(User user) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.execute();
-            try (ResultSet id = ps.getGeneratedKeys()) {
-                if(id.next()) {
-                    user.setId(id.getInt(1));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("UPDATE posts SET name = ?, description = ?, created = CURRENT_DATE WHERE id = ?")
@@ -182,19 +170,6 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void update(User user) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?")
-        ) {
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

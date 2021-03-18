@@ -4,6 +4,7 @@ import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 public interface Store {
@@ -12,7 +13,7 @@ public interface Store {
 
     void save(Post post);
     void save(Candidate candidate);
-    void save(User user);
+    void save(User user) throws SQLException;
 
     Post findPostById(int id);
     Candidate findCanById(int id);

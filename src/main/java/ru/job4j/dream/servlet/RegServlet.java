@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class RegServlet extends HttpServlet {
     @Override
@@ -15,14 +16,14 @@ public class RegServlet extends HttpServlet {
         String userName = req.getParameter("name");
         String userEmail = req.getParameter("email");
         String userPassword = req.getParameter("password");
-        if (PsqlStore.instOf().findUserByEmail(userEmail) != null) {
-            req.setAttribute("error", "Пользователь с таким email уже существует!");
-            req.getRequestDispatcher("/reg.jsp").forward(req, resp);
-        } else {
+        try {
             PsqlStore.instOf().save(
                     new User(0, userName, userEmail, userPassword));
-            resp.sendRedirect(req.getContextPath() + "/auth.do");
+        } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/reg.jsp").forward(req, resp);
         }
+        resp.sendRedirect(req.getContextPath() + "/auth.do");
     }
 
     @Override
