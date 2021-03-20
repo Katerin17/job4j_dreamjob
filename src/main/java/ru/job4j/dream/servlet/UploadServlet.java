@@ -43,7 +43,9 @@ public class UploadServlet extends HttpServlet {
             List<FileItem> items = upload.parseRequest(req);
             File folder = new File(pathName);
             if (!folder.exists()) {
-                folder.mkdir();
+                if (!folder.mkdir()) {
+                    throw new RuntimeException();
+                }
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {

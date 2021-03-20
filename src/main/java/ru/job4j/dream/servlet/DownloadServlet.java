@@ -16,14 +16,16 @@ public class DownloadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         File folder = new File(pathName);
         if (!folder.exists()) {
-            folder.mkdir();
+           if (!folder.mkdir()) {
+               throw new RuntimeException();
+           }
         }
         String nameId = req.getParameter("nameId");
         if (nameId.contains(".")) {
             nameId = getNameWithoutExtension(nameId);
         }
         File downloadFile = null;
-        for (File file : folder.listFiles()) {
+        for (File file : Objects.requireNonNull(folder.listFiles())) {
             String shortFileName = file.getName();
             if (nameId.equals(getNameWithoutExtension(shortFileName))) {
                 downloadFile = file;

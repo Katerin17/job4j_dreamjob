@@ -65,12 +65,12 @@
                             </td>
                             <td>
                                 <img src="<c:url value='/download.do?nameId=${candidate.id}'/>" width="100px" height="100px"/>
-                                <a href='<c:url value="/upload.jsp?id=${candidate.id}"/>'>
-                                    <i class="fa fa-download mr-3"></i>
-                                </a>
-                                <a href='<c:url value="/remove.do?mode=1&id=${candidate.id}"/>'>
-                                    <i class="fa fa-remove mr-3"></i>
-                                </a>
+                                <form action="<c:url value='/upload.jsp?id=${candidate.id}'/>">
+                                    <button type="submit" class="fa fa-download"></button>
+                                </form>
+                                <form action="<c:url value='/remove.do?mode=1&id=${candidate.id}'/>" method="post">
+                                    <button type="submit" class="fa fa-remove"></button>
+                                </form>
                             </td>
                             <td>
                                 <form action="<c:url value='/remove.do?mode=2&id=${candidate.id}'/>" method="post">
