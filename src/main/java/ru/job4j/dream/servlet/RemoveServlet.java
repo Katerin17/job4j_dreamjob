@@ -17,8 +17,8 @@ public class RemoveServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
-        String mode = req.getParameter("mode");
-        if (mode.equals("2")) {
+        String action = req.getParameter("action");
+        if (action.equals("deleteCandidate")) {
             Candidate removedCandidate = PsqlStore.instOf().findCanById(Integer.parseInt(id));
             PsqlStore.instOf().deleteCan(removedCandidate);
         }

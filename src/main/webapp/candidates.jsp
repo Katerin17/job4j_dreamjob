@@ -68,12 +68,12 @@
                                 <form action="<c:url value='/upload.jsp?id=${candidate.id}'/>">
                                     <button type="submit" class="fa fa-download"></button>
                                 </form>
-                                <form action="<c:url value='/remove.do?mode=1&id=${candidate.id}'/>" method="post">
+                                <form action="<c:url value='/remove.do?action=deleteImage&id=${candidate.id}'/>" method="post">
                                     <button type="submit" class="fa fa-remove"></button>
                                 </form>
                             </td>
                             <td>
-                                <form action="<c:url value='/remove.do?mode=2&id=${candidate.id}'/>" method="post">
+                                <form action="<c:url value='/remove.do?action=deleteCandidate&id=${candidate.id}'/>" method="post">
                                     <button type="submit" class="btn btn-primary">Удалить</button>
                                 </form>
                             </td>
