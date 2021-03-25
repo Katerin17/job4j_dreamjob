@@ -5,7 +5,6 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.Store;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +14,7 @@ public class PsqlStoreStub implements Store {
 
     @Override
     public Collection<Post> findAllPosts() {
-        return null;
+        return store.values();
     }
 
     @Override
