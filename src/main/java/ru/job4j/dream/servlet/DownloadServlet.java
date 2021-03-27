@@ -25,7 +25,7 @@ public class DownloadServlet extends HttpServlet {
             nameId = getNameWithoutExtension(nameId);
         }
         File downloadFile = null;
-        for (File file : Objects.requireNonNull(folder.listFiles())) {
+        for (File file : folder.listFiles()) {
             String shortFileName = file.getName();
             if (nameId.equals(getNameWithoutExtension(shortFileName))) {
                 downloadFile = file;
