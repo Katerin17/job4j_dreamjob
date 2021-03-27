@@ -50,9 +50,9 @@ public class PostServletTest extends TestCase {
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         when(req.getSession()).thenReturn(session);
-        //when(session.getAttribute("user")).thenReturn("Kate");
         when(req.getRequestDispatcher(any(String.class))).thenReturn(dispatcher);
         new PostServlet().doGet(req, resp);
-        Mockito.verify(dispatcher).forward(req,resp);
+        verify(req).getRequestDispatcher("posts.jsp");
+        verify(dispatcher).forward(req,resp);
     }
 }
