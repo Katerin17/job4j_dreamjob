@@ -7,6 +7,32 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            const name = $('#name');
+            const lastN = $('#lastN');
+            const gender = $('#gender');
+            const description = $('#description');
+            let message = "Вы забыли ввести "
+            if (name.val() === '') {
+                alert(message + name.attr("title"));
+                return false;
+            }
+            if (lastN.val() === '') {
+                alert(message + lastN.attr("title"));
+                return false;
+            }
+            if (gender.val() === '') {
+                alert(message + gender.attr("title"));
+                return false;
+            }
+            if (description.val() === '') {
+                alert(message + description.attr("title"));
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 
@@ -16,27 +42,28 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Имя:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" placeholder="Введите имя" name="name">
+                <input type="text" class="form-control" id="name" placeholder="Введите имя" title="Имя">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="lastN">Фамилия:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="lastN" placeholder="Введите фамилию" name="lastN">
+                <input type="text" class="form-control" id="lastN" placeholder="Введите фамилию" title="Фамилия">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="gender">Пол:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="gender" placeholder="Мужской/Женский" name="gender">
+                <input type="text" class="form-control" id="gender" placeholder="Мужской/Женский" title="Пол">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="description">Описание:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="description" name="description">
+                <input type="text" class="form-control" id="description" title="Описание">
             </div>
         </div>
+        <button type="button" class="btn btn-default" onclick="return validate();">Submit</button>
     </form>
 </div>
 <div class="container">
