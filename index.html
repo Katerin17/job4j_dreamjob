@@ -35,14 +35,16 @@
     </script>
     <script>
         function addRow() {
-            const name = $('#name').val();
-            const lastN = $('#lastN').val();
-            const gender = $('#gender').val();
-            const description = $('#description').val();
-            $('#table tr:last').after('<tr><td>' + name +'</td>'
-                            +'<td>' + lastN +'</td>'
-                            +'<td>' + gender +'</td>'
-                            +'<td>' + description +'</td></tr>');
+            if (validate()) {
+                const name = $('#name').val();
+                const lastN = $('#lastN').val();
+                const gender = $('#gender').val();
+                const description = $('#description').val();
+                $('#table tr:last').after('<tr><td>' + name + '</td>'
+                    + '<td>' + lastN + '</td>'
+                    + '<td>' + gender + '</td>'
+                    + '<td>' + description + '</td></tr>');
+            }
         }
     </script>
 </head>
@@ -75,8 +77,7 @@
                 <input type="text" class="form-control" id="description" title="Описание">
             </div>
         </div>
-        <button type="button" class="btn btn-default" onclick="return validate();">Submit</button>
-        <button type="button" class="btn btn-default" onclick="return addRow();">Add entry</button>
+        <button type="button" class="btn btn-default" onclick="addRow();">Add entry</button>
     </form>
 </div>
 <div class="container">
