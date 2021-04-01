@@ -14,7 +14,7 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8085/dreamjob/greet',
-            data: 'name=' + $('#inputEmail').val(),
+            data: { name : $('#inputEmail').val() },
             dataType: 'json'
         }).done(function(data) {
             $( "form h1" ).first().after('<h3>' + data + "!" +'</h3>');
