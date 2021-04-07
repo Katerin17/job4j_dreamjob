@@ -1,10 +1,12 @@
 package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.Store;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,11 @@ public class PsqlStoreStub implements Store {
 
     @Override
     public Collection<Candidate> findAllCandidates() {
+        return null;
+    }
+
+    @Override
+    public Collection<City> findAllCities() {
         return null;
     }
 
@@ -38,6 +45,11 @@ public class PsqlStoreStub implements Store {
     }
 
     @Override
+    public void save(City city) {
+
+    }
+
+    @Override
     public Post findPostById(int id) {
         return store.get(id);
     }
@@ -49,6 +61,11 @@ public class PsqlStoreStub implements Store {
 
     @Override
     public User findUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public City findCityById(int id) {
         return null;
     }
 

@@ -14,7 +14,7 @@ public class RegServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("name");
-        String userEmail = req.getParameter("email");
+        String userEmail = req.getParameter("email").toLowerCase();
         String userPassword = req.getParameter("password");
         try {
             PsqlStore.instOf().save(

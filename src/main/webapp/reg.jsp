@@ -18,7 +18,27 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script>
+        function validate() {
+            const name = $('#name');
+            const email = $('#email');
+            const password = $('#password');
+            let message = "Enter "
+            if (name.val() === '') {
+                alert(message + name.attr("placeholder"));
+                return false;
+            }
+            if (email.val() === '') {
+                alert(message + email.attr("placeholder"));
+                return false;
+            }
+            if (password.val() === '') {
+                alert(message + password.attr("placeholder"));
+                return false;
+            }
+            return true;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -37,17 +57,17 @@
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label for="name">Имя</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="your name">
                     </div>
                     <div class="form-group">
                         <label for="email">Почта</label>
-                        <input type="text" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="your email">
                     </div>
                     <div class="form-group">
                         <label for="password">Пароль</label>
-                        <input type="text" class="form-control" id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="your password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться</button>
                 </form>
             </div>
         </div>
