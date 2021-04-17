@@ -9,11 +9,10 @@ public class CORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest HttpRequest = (HttpServletRequest) request;
-
-        ((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
-        ((HttpServletResponse) response).addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-
         HttpServletResponse HttpResponse = (HttpServletResponse) response;
+
+        HttpResponse.addHeader("Access-Control-Allow-Origin", "*");
+        HttpResponse.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 
         if (HttpRequest.getMethod().equals("OPTIONS")) {
             HttpResponse.setStatus(HttpServletResponse.SC_ACCEPTED);
