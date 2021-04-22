@@ -6,4 +6,4 @@ Project DreamWork
 ![ScreenShot](images/3.png?raw=true "Posts page")
 ![ScreenShot](images/4.png?raw=true "Candidates page")
 ![ScreenShot](images/5.png?raw=true "New candodate page")
-![ScreenShot](images/5.png?raw=true "Post edit page")
+![ScreenShot](images/6.png?raw=true "Post edit page")
